@@ -1,0 +1,24 @@
+<% layout("./layouts/base.ejs") %>
+    <h1>Editar</h1>
+    <form action="/clientes/<%= id %>/productos/<%=producto._id %>?_method=PUT" method="POST">
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" name="nombre" id="nombre" class="form-control" value="<%= producto.nombre %>">
+        </div>
+        <div class="mb-3">
+            <label for="precio" class="form-label">Precio</label>
+            <input type="number" min="0" step="0.01" name="precio" id="precio" class="form-control" value="<%= producto.precio %>">
+        </div>
+        <div class="mb-3">
+            <label for="categoria">Categoria</label>
+            <select name="categoria" id="categoria" class="form-select">
+                <% for (let categoria of categorias) { %>
+                    <option value="<%= categoria %>" <%=categoria===producto.categoria? "selected" : "" %> >
+                        <%= categoria %>
+                    </option>
+                    <% } %>
+            </select>
+        </div>
+        <button class="btn btn-success">Guardar</button>
+        <a class="btn btn-secondary text-light" href="/clientes/<%=id %>/productos">Volver a Productos</a>
+    </form>

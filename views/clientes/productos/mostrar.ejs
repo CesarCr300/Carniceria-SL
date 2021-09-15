@@ -1,0 +1,25 @@
+<% layout("./layouts/base.ejs") %>
+    <h1>Productos de
+        <%= cliente.nombre %>
+    </h1>
+    <a href="/clientes/<%= cliente._id %>/productos/nuevo" class="btn btn-primary">Nuevo producto</a>
+
+    <% for (let producto of productos){ %>
+        <div class="card my-3">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <%= producto.nombre.charAt(0).toUpperCase()+producto.nombre.slice(1) %>
+                </h5>
+                <h6 class="card-subtitle mb-2 text-muted">Precio:
+                    <%= producto.precio %>
+                </h6>
+                <h6 class="card-subtitle mb-2 text-muted">Precio sin IGV:
+                    <%= Math.round(producto.precio/1.18*100)/100 %>
+                </h6>
+                <a href="/clientes/<%= cliente._id %>/productos/<%= producto._id %>/editar" class="card-link btn btn-success">Editar</a>
+                <form action="/clientes/<%= cliente._id %>/productos/<%=producto._id%>?_method=DELETE" method="POST" class="d-inline">
+                    <button class="card-link btn btn-danger mx-0">Eliminar</button>
+                </form>
+            </div>
+        </div>
+        <% } %>

@@ -1,0 +1,18 @@
+<% layout("./layouts/base.ejs") %>
+    <h1>Editar</h1>
+    <form action="/clientes/<%= cliente._id %>?_method=PUT" method="POST">
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" name="nombre" id="nombre" class="form-control" value="<%= cliente.nombre %>">
+        </div>
+        <div class="mb-3">
+            <label for="direccion" class="form-label">Direccion</label>
+            <input type="text" name="direccion" id="direccion" class="form-control" value="<%= cliente.direccion %>">
+        </div>
+        <div class="mb-3">
+            <label for="numero" class="form-label">Número</label>
+            <input type="number" min="0" step="0.01" name="numero" id="numero" class="form-control" value="<%= cliente.numero %>">
+        </div>
+        <button class="btn btn-success">Guardar</button>
+        <a class="btn btn-secondary text-light" href="/clientes">Volver a clientes</a>
+    </form>

@@ -1,0 +1,57 @@
+const { Router } = require("express");
+const router = new Router();
+
+const modelos = require("../data/modelos");
+const Cliente = modelos.Cliente;
+const Producto = modelos.Producto;
+let categorias = ["res", "cerdo", "pollo", "carnero", "pavo", "otros"];
+
+router.get("/clientes/:id/productos", async(req, res) => {
+    const { id } = req.params;
+    const cliente = await Cliente.findById(id);
+    const productos = await Producto.find({ cliente: cliente });
+    res.render("clientes/productos/mostrar", { cliente, productos });
+});
+
+router.get("/clientes/:id/productos/nuevo", async(req, res) => {
+    const { id } = req.params;
+    res.render("clientes/productos/nuevo", { id });
+});
+router.post("/clientes/:id/productos", async(req, res) => {
+    const { id } = req.params;
+    const { nombre, precio, categoria } = req.body;
+    const cliente = await Cliente.findById(id);
+    const producto = await Producto.create({
+        nombre,
+        precio,
+        categoria,
+        cliente,
+    });
+    await producto.save();
+    res.redirect(`/clientes/${id}/productos`);
+});
+
+router.get("/clientes/:id/productos/:idProducto/editar", async(req, res) => {
+    const { id, idProducto } = req.params;
+    const producto = await Producto.findById(idProducto);
+    res.render("clientes/productos/editar", { id, producto, categorias });
+});
+router.put("/clientes/:id/productos/:idProducto", async(req, res) => {
+    const { id, idProducto } = req.params;
+    const { nombre, precio, categoria } = req.body;
+    const cliente = await Cliente.findById(id);
+    const producto = await Producto.findByIdAndUpdate(idProducto, {
+        nombre,
+        precio,
+        categoria,
+    });
+    res.redirect(`/clientes/${id}/productos`);
+});
+
+router.delete("/clientes/:id/productos/:idProducto", async(req, res) => {
+    const { idProducto, id } = req.params;
+    await Producto.findByIdAndDelete(idProducto);
+    res.redirect(`/clientes/${id}/productos`);
+});
+
+module.exports = router;

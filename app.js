@@ -85,7 +85,6 @@ app.post("/clientes", async(req, res) => {
         numero,
     });
     await cliente.save();
-    res.json({ status: "ok" });
     res.redirect("/clientes");
 });
 app.delete("/clientes/:id", async(req, res) => {

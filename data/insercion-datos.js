@@ -2,10 +2,9 @@ const mongoose = require("mongoose");
 const modelos = require("./modelos");
 const Cliente = modelos.Cliente;
 const Producto = modelos.Producto;
+require("dotenv").config();
 
-mongoose.connect(
-    "mongodb+srv://cesar:stickman2130@carniceria-sl.b0fcy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-);
+mongoose.connect(process.env.CONECCION_BD);
 
 const agregarProducto = async function(ruc, datos) {
     const cliente = await Cliente.findById(ruc);

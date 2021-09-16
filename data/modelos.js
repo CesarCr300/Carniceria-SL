@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
-mongoose.connect(
-    "mongodb+srv://cesar:stickman2130@carniceria-sl.b0fcy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-);
+require("dotenv").config();
+mongoose.connect(process.env.CONECCION_BD);
 
 const clienteEsquema = new mongoose.Schema({
     _id: {

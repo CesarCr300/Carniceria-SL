@@ -9,12 +9,12 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.engine("ejs", ejsMate);
 
+app.use("/public", express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride("_method"));
 
 app.use(require("./routes/productos.routes"));
-
 app.use(require("./routes/cliente.routes"));
 app.listen(app.get("port"), () => {
     console.log("Listen");

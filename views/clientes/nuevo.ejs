@@ -1,13 +1,13 @@
 <% layout("./layouts/base.ejs") %>
     <h1>Nuevo Cliente</h1>
-    <form action="/clientes" method="POST">
+    <form action="/clientes" method="POST" class="needs-validation" novalidate>
         <div class="mb-3">
             <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" name="nombre" id="nombre" class="form-control">
+            <input type="text" name="nombre" id="nombre" class="form-control" required>
         </div>
         <div class="mb-3">
             <label for="ruc" class="form-label">RUC</label>
-            <input type="number" min="0" step="0.01" name="ruc" id="ruc" class="form-control">
+            <input type="number" min="0" step="0.01" name="ruc" id="ruc" class="form-control" required>
         </div>
         <div class="mb-3">
             <label for="direccion" class="form-label">Dirección</label>
@@ -19,3 +19,4 @@
         </div>
         <button class="btn btn-success">Agregar</button>
     </form>
+    <script src="/public/validation.js"></script>

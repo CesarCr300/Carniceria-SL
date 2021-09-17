@@ -1,9 +1,9 @@
 <% layout("./layouts/base.ejs") %>
     <h1>Editar</h1>
-    <form action="/clientes/<%= cliente._id %>?_method=PUT" method="POST">
+    <form action="/clientes/<%= cliente._id %>?_method=PUT" method="POST" novalidate class="needs-validation">
         <div class="mb-3">
             <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" name="nombre" id="nombre" class="form-control" value="<%= cliente.nombre %>">
+            <input type="text" name="nombre" id="nombre" class="form-control" value="<%= cliente.nombre %>" required>
         </div>
         <div class="mb-3">
             <label for="direccion" class="form-label">Direccion</label>
@@ -16,3 +16,4 @@
         <button class="btn btn-success">Guardar</button>
         <a class="btn btn-secondary text-light" href="/clientes">Volver a clientes</a>
     </form>
+    <script src="/public/validation.js"></script>

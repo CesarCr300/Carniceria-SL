@@ -1,43 +1,45 @@
 <% layout("./layouts/base.ejs") %>
     <h1>Clientes</h1>
     <a href="/clientes/nuevo" class="btn btn-primary mb-3">Agregar Cliente</a>
-    <% for (let cliente of clientes){ %>
-        <div class="card mb-3">
-            <div class="card-body">
-                <h5 class="card-title">
-                    <a href="/clientes/<%= cliente._id %>/productos" class="text-dark 1text-decoration-none">
-                    </a>
-                    <a href="/clientes/<%= cliente._id %>/productos" class="card-title text-warning text-decoration-none">
-                        <%= cliente.nombre %>
-                    </a>
-                </h5>
-                <% if (cliente.ruc) { %>
-                    <h6 class="card-subtitle mb-2 text-muted">
-                        <%=cliente.ruc%>
-                    </h6>
-                    <% } else{%>
-                        <h6 class="card-subtitle mb-2 text-muted">
-                            Público
+    <div class="row">
+        <% for (let cliente of clientes){ %>
+            <div class="col-sm-6">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="/clientes/<%= cliente._id %>/productos" class="text-dark 1text-decoration-none">
+                            </a>
+                            <a href="/clientes/<%= cliente._id %>/productos" class="card-title text-warning text-decoration-none">
+                                <%= cliente.nombre %>
+                            </a>
+                        </h5>
+                        <h6 class="card-subtitle mb-2">
+                            <p>
+                                <%=cliente.ruc%>
+                            </p>
                         </h6>
-                        <% } %>
-                            <% if (cliente.direccion){ %>
-                                <p>
-                                    <%= cliente.direccion %>
-                                </p>
+                        <% if (cliente.direccion){ %>
+                            <p>
+                                <%= cliente.direccion %>
+                            </p>
+                            <% } else {%>
+                                <p class="text-muted">Direccion</p>
                                 <% } %>
                                     <% if (cliente.numero){ %>
                                         <p>
                                             <%= cliente.numero%>
                                         </p>
-                                        <% } %>
-                                            <div>
-                                                <a href="/clientes/<%=cliente._id %>/editar" class="card-link btn btn-success">Editar</a>
-                                                <form action="/clientes/<%=cliente._id %>?_method=DELETE" method="POST" class="d-inline">
-                                                    <button class="btn btn-danger ">Borrar</button>
-                                                </form>
-                                            </div>
-
+                                        <% } else{%>
+                                            <p class="text-muted">Número</p>
+                                            <% } %>
+                                                <div>
+                                                    <a href="/clientes/<%=cliente._id %>/editar" class="card-link btn btn-success">Editar</a>
+                                                    <form action="/clientes/<%=cliente._id %>?_method=DELETE" method="POST" class="d-inline">
+                                                        <button class="btn btn-danger ">Borrar</button>
+                                                    </form>
+                                                </div>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <% } %>
+            <% } %>
+    </div>

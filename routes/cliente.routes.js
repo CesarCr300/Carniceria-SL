@@ -3,6 +3,7 @@ const router = new Router();
 
 const modelos = require("../data/modelos");
 const Cliente = modelos.Cliente;
+const Producto = modelos.Producto;
 
 router.get("/", (req, res) => {
     res.redirect("/clientes");
@@ -30,7 +31,8 @@ router.post("/clientes", async(req, res) => {
 
 router.delete("/clientes/:id", async(req, res) => {
     const { id } = req.params;
-    await Cliente.findByIdAndDelete(id);
+    const cliente = await Cliente.findByIdAndDelete(id, { new: true });
+    const productos = await Producto.deleteMany({ cliente });
     res.redirect("/clientes");
 });
 

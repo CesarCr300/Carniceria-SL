@@ -39,8 +39,7 @@ router.get("/clientes/:id/productos/:idProducto/editar", async(req, res) => {
 router.put("/clientes/:id/productos/:idProducto", async(req, res) => {
     const { id, idProducto } = req.params;
     const { nombre, precio, categoria } = req.body;
-    const cliente = await Cliente.findById(id);
-    const producto = await Producto.findByIdAndUpdate(idProducto, {
+    await Producto.findByIdAndUpdate(idProducto, {
         nombre,
         precio,
         categoria,

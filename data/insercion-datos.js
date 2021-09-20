@@ -8,7 +8,7 @@ mongoose.connect(process.env.CONECCION_BD);
 
 const mostrarProductos = async() => {
     try {
-        const cliente = await Cliente.find().populate("productos");
+        const cliente = await Cliente.findById("20600867548").populate("productos");
         console.log(cliente);
     } catch (e) {
         console.log(e);

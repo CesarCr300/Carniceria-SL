@@ -9,7 +9,6 @@ let categorias = ["res", "cerdo", "pollo", "carnero", "pavo", "otros"];
 router.get("/clientes/:id/productos", async(req, res) => {
     const { id } = req.params;
     const cliente = await Cliente.findById(id).populate("productos");
-    let productos = [];
     res.render("clientes/productos/mostrar", {
         cliente,
         productos: cliente.productos,
@@ -28,7 +27,6 @@ router.post("/clientes/:id/productos", async(req, res) => {
         nombre,
         precio,
         categoria,
-        cliente,
     });
     await producto.save();
     cliente.productos.push(producto);
@@ -54,7 +52,13 @@ router.put("/clientes/:id/productos/:idProducto", async(req, res) => {
 
 router.delete("/clientes/:id/productos/:idProducto", async(req, res) => {
     const { idProducto, id } = req.params;
-    await Producto.findByIdAndDelete(idProducto);
+    const producto = await Producto.findByIdAndDelete(idProducto, { new: true });
+    console.log("producto eliminado", producto);
+    const cliente = await Cliente.findById(id).populate("productos");
+    console.log("cliente", cliente);
+    // await cliente.productos.pop(producto);
+    // await cliente.save();
+    // console.log("cliente luego de eliminar", cliente);
     res.redirect(`/clientes/${id}/productos`);
 });
 

@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
-mongoose.connect(process.env.CONECCION_BD);
+mongoose.connect(
+    process.env.CONECCION_BD || "mongodb://localhost:27017/carniceria"
+);
 
 const clienteEsquema = new mongoose.Schema({
     _id: {

@@ -4,7 +4,9 @@ const Cliente = modelos.Cliente;
 const Producto = modelos.Producto;
 require("dotenv").config();
 
-mongoose.connect(process.env.CONECCION_BD);
+mongoose.connect(
+    process.env.CONECCION_BD || "mongodb://localhost:27017/carniceria"
+);
 
 const agregarProducto = async function(ruc, datos) {
     const cliente = await Cliente.findById(ruc);

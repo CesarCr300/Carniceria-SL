@@ -30,11 +30,7 @@ router.post("/clientes", async(req, res) => {
 
 router.delete("/clientes/:id", async(req, res) => {
     const { id } = req.params;
-    let cliente = await Cliente.findByIdAndDelete(id, { new: true });
-    cliente = await cliente.populate("productos");
-    cliente.productos.map(async(producto) => {
-        await Producto.deleteOne(producto);
-    });
+    let cliente = await Cliente.findOneAndDelete({ _id: id });
     res.redirect("/clientes");
 });
 

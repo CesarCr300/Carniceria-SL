@@ -20,6 +20,14 @@ const clienteEsquema = new mongoose.Schema({
     numero: { type: String },
     productos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Producto" }],
 });
+clienteEsquema.post("findOneAndDelete", async(farm) => {
+    console.log("Post");
+    console.log(farm);
+    if (farm.productos.length > 0) {
+        let res = await Producto.deleteMany({ _id: { $in: farm.productos } });
+        console.log(res);
+    }
+});
 const Cliente = mongoose.model("Cliente", clienteEsquema);
 module.exports.Cliente = Cliente;
 module.exports.Producto = Producto;

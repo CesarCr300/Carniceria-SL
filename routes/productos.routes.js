@@ -53,9 +53,6 @@ router.put("/clientes/:id/productos/:idProducto", async(req, res) => {
 router.delete("/clientes/:id/productos/:idProducto", async(req, res) => {
     const { idProducto, id } = req.params;
     const producto = await Producto.findByIdAndDelete(idProducto, { new: true });
-    console.log("producto eliminado", producto);
-    const cliente = await Cliente.findById(id).populate("productos");
-    console.log("cliente", cliente);
     res.redirect(`/clientes/${id}/productos`);
 });
 

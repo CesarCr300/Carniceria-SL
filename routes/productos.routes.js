@@ -8,9 +8,12 @@ let categorias = ["res", "cerdo", "pollo", "carnero", "pavo", "otros"];
 
 router.get("/clientes/:id/productos", async(req, res) => {
     const { id } = req.params;
-    const cliente = await Cliente.findById(id);
-    const productos = await Producto.find({ cliente: cliente });
-    res.render("clientes/productos/mostrar", { cliente, productos });
+    const cliente = await Cliente.findById(id).populate("productos");
+    let productos = [];
+    res.render("clientes/productos/mostrar", {
+        cliente,
+        productos: cliente.productos,
+    });
 });
 
 router.get("/clientes/:id/productos/nuevo", async(req, res) => {
@@ -28,6 +31,8 @@ router.post("/clientes/:id/productos", async(req, res) => {
         cliente,
     });
     await producto.save();
+    cliente.productos.push(producto);
+    await cliente.save();
     res.redirect(`/clientes/${id}/productos`);
 });
 

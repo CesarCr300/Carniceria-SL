@@ -19,8 +19,7 @@ router.get("/clientes/nuevo", async(req, res) => {
 router.post("/clientes", async(req, res) => {
     const { ruc, nombre, direccion, numero } = req.body;
     const cliente = await new Cliente({
-        _id: ruc.toString(),
-        ruc,
+        _id: ruc,
         nombre,
         direccion,
         numero,
@@ -31,8 +30,11 @@ router.post("/clientes", async(req, res) => {
 
 router.delete("/clientes/:id", async(req, res) => {
     const { id } = req.params;
-    const cliente = await Cliente.findByIdAndDelete(id, { new: true });
-    const productos = await Producto.deleteMany({ cliente });
+    let cliente = await Cliente.findByIdAndDelete(id, { new: true });
+    cliente = await cliente.populate("productos");
+    cliente.productos.map(async(producto) => {
+        await Producto.deleteOne(producto);
+    });
     res.redirect("/clientes");
 });
 

@@ -4,6 +4,8 @@ const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 
+const routerCliente = require("./routes/cliente.routes");
+const routerProductos = require("./routes/productos.routes");
 app.set("port", process.env.PORT || 3000);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -14,8 +16,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride("_method"));
 
-app.use(require("./routes/productos.routes"));
-app.use(require("./routes/cliente.routes"));
+app.get("/", (req, res) => {
+    res.redirect("/clientes");
+});
+
+app.use("/clientes/:id/productos",
+    routerProductos);
+app.use("/clientes", routerCliente);
 
 app.listen(app.get("port"), () => {
     console.log("Listen");

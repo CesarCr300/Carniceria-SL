@@ -1,12 +1,12 @@
 const { Router } = require("express");
-const router = new Router();
+const router = new Router({ mergeParams: true });
 
 const modelos = require("../data/modelos");
 const Cliente = modelos.Cliente;
 const Producto = modelos.Producto;
 let categorias = ["res", "cerdo", "pollo", "carnero", "pavo", "otros"];
 
-router.get("/clientes/:id/productos", async(req, res) => {
+router.get("/", async(req, res) => {
     const { id } = req.params;
     const cliente = await Cliente.findById(id).populate("productos");
     res.render("clientes/productos/mostrar", {
@@ -15,11 +15,11 @@ router.get("/clientes/:id/productos", async(req, res) => {
     });
 });
 
-router.get("/clientes/:id/productos/nuevo", async(req, res) => {
+router.get("/nuevo", async(req, res) => {
     const { id } = req.params;
     res.render("clientes/productos/nuevo", { id });
 });
-router.post("/clientes/:id/productos", async(req, res) => {
+router.post("/", async(req, res) => {
     const { id } = req.params;
     const { nombre, precio, categoria } = req.body;
     const cliente = await Cliente.findById(id);
@@ -34,12 +34,12 @@ router.post("/clientes/:id/productos", async(req, res) => {
     res.redirect(`/clientes/${id}/productos`);
 });
 
-router.get("/clientes/:id/productos/:idProducto/editar", async(req, res) => {
+router.get("/:idProducto/editar", async(req, res) => {
     const { id, idProducto } = req.params;
     const producto = await Producto.findById(idProducto);
     res.render("clientes/productos/editar", { id, producto, categorias });
 });
-router.put("/clientes/:id/productos/:idProducto", async(req, res) => {
+router.put("/:idProducto", async(req, res) => {
     const { id, idProducto } = req.params;
     const { nombre, precio, categoria } = req.body;
     await Producto.findByIdAndUpdate(idProducto, {
@@ -50,7 +50,7 @@ router.put("/clientes/:id/productos/:idProducto", async(req, res) => {
     res.redirect(`/clientes/${id}/productos`);
 });
 
-router.delete("/clientes/:id/productos/:idProducto", async(req, res) => {
+router.delete("/:idProducto", async(req, res) => {
     const { idProducto, id } = req.params;
     await Cliente.findByIdAndUpdate(id, { $pull: { productos: idProducto } });
     await Producto.findByIdAndDelete(idProducto, { new: true });

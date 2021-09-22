@@ -32,12 +32,14 @@ router.post("/", validacionCliente, asyncError(async(req, res) => {
         numero,
     });
     await cliente.save();
+    req.flash("exito", "Cliente creado exitosamente")
     res.redirect("/clientes");
 }));
 
 router.delete("/:id", asyncError(async(req, res) => {
     const { id } = req.params;
-    let cliente = await Cliente.findOneAndDelete({ _id: id });
+    const cliente = await Cliente.findOneAndDelete({ _id: id });
+    req.flash("exito", `${cliente.nombre} fue borrado exitosamente`)
     res.redirect("/clientes");
 }));
 
@@ -54,6 +56,7 @@ router.put("/:id", validacionCliente, asyncError(async(req, res) => {
         direccion,
         numero,
     });
+    req.flash("exito", `${nombre} actualizado exitosamente`)
     res.redirect("/clientes");
 }));
 

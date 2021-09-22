@@ -4,7 +4,16 @@ const modelos = require("../data/modelos");
 const asyncError = require("../utils/asyncError");
 const ExpressError = require("../utils/expressError");
 const Cliente = modelos.Cliente;
-const Producto = modelos.Producto;
+
+const { esquemaCliente } = require("../esquemasJoi/validaciones")
+const validacionCliente = (req, res, next) => {
+    if (!req.body.ruc) {
+        req.body.ruc = req.params.id;
+    }
+    const { error } = esquemaCliente.validate(req.body);
+    if (error) throw new ExpressError(error.details[0].message, 500)
+    next()
+}
 
 router.get("/", asyncError(async(req, res, next) => {
     const clientes = await Cliente.find();
@@ -14,7 +23,7 @@ router.get("/", asyncError(async(req, res, next) => {
 router.get("/nuevo", (req, res) => {
     res.render("clientes/nuevo.ejs");
 });
-router.post("/", asyncError(async(req, res) => {
+router.post("/", validacionCliente, asyncError(async(req, res) => {
     const { ruc, nombre, direccion, numero } = req.body;
     const cliente = await new Cliente({
         _id: ruc,
@@ -37,7 +46,7 @@ router.get("/:id/editar", asyncError(async(req, res) => {
     const cliente = await Cliente.findById(id);
     res.render("clientes/editar.ejs", { cliente });
 }));
-router.put("/:id", asyncError(async(req, res) => {
+router.put("/:id", validacionCliente, asyncError(async(req, res) => {
     const { id } = req.params;
     const { nombre, direccion, numero } = req.body;
     await Cliente.findByIdAndUpdate(id, {

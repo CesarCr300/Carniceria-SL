@@ -26,9 +26,9 @@ app.use("/clientes/:id/productos",
     routerProductos);
 app.use("/clientes", routerCliente);
 
-// app.use("*", (req, res, next) => {
-//     throw new ExpressError("Errors", 300)
-// })
+app.get("*", (req, res, next) => {
+    throw new ExpressError("Page dont found", 404)
+})
 
 app.use((err, req, res, next) => {
     const { message = "Error desconocido", status = "500" } = err;

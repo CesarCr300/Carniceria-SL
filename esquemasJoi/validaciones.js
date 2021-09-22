@@ -1,13 +1,13 @@
 const Joi = require("joi");
 
-module.exports.cliente = Joi.object({
+module.exports.esquemaCliente = Joi.object({
     nombre: Joi.string().required(),
-    _id: Joi.string().required(),
-    direccion: Joi.string(),
-    numero: Joi.string(),
-}.required())
+    ruc: Joi.string().required(),
+    direccion: Joi.string().allow(""),
+    numero: Joi.string().allow(""),
+})
 
-module.exports.producto = Joi.object({
+module.exports.esquemaProducto = Joi.object({
     nombre: Joi.string().required(),
     precio: Joi.number().required().min(0),
     categoria: Joi.string().valid("res", "cerdo", "pollo", "carnero", "pavo", "otros").required()

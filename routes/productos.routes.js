@@ -31,6 +31,7 @@ router.post("/", async(req, res) => {
     await producto.save();
     cliente.productos.push(producto);
     await cliente.save();
+    req.flash("exito", `${nombre} fue agregado exitosamente`)
     res.redirect(`/clientes/${id}/productos`);
 });
 
@@ -47,13 +48,15 @@ router.put("/:idProducto", async(req, res) => {
         precio,
         categoria,
     });
+    req.flash("exito", `${nombre} fue actualizado correctamente`)
     res.redirect(`/clientes/${id}/productos`);
 });
 
 router.delete("/:idProducto", async(req, res) => {
     const { idProducto, id } = req.params;
     await Cliente.findByIdAndUpdate(id, { $pull: { productos: idProducto } });
-    await Producto.findByIdAndDelete(idProducto, { new: true });
+    const producto = await Producto.findByIdAndDelete(idProducto, { new: true });
+    req.flash("exito", `${producto.nombre} fue eliminado correctamente`)
     res.redirect(`/clientes/${id}/productos`);
 });
 

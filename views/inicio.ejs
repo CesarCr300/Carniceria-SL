@@ -2,12 +2,9 @@
     <h1>Productos</h1>
     <div class="row">
         <% for (let producto of cliente.productos) { %>
-            <div class="card my-3 mx-3" style="max-width: 540px;">
-                <div class="row g-0 py-3 px-3">
-                    <div class="col-md-4">
-                        <i class="fas fa-drumstick-bite fa-7x"></i>
-                    </div>
-                    <div class="col md-8">
+            <div class="card mb-3" style="max-width: 540px">
+                <div class="row g-0 py-3 ">
+                    <div class="col md-8 pl-3">
                         <div class="card-body">
                             <h5 class="card-title">
                                 <%= producto.nombre.charAt(0).toUpperCase()+producto.nombre.slice(1) %>
@@ -17,7 +14,7 @@
                             </h6>
                             <h6 class="card-subtitle">
                                 Categoría:
-                                <%= producto.categoria.charAt(0).toUpperCase()+producto.nombre.slice(1) %>
+                                <%= producto.categoria %>
                             </h6>
                         </div>
                     </div>

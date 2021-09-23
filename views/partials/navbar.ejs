@@ -9,8 +9,10 @@
                 <a class="nav-link active" aria-current="page" href="/">Catalogo productos</a>
                 <% if (usuarioLogeado) {%>
                     <a class="nav-link active" aria-current="page" href="/clientes">Clientes</a>
-                    <a class="nav-link active" href="/clientes/nuevo">Nuevo Cliente</a>
-                    <% } %>
+                    <% if (usuarioLogeado.rango!=="visitante" ){ %>
+                        <a class="nav-link active" href="/clientes/nuevo">Nuevo Cliente</a>
+                        <% } %>
+                            <% } %>
             </div>
             <div class="navbar-nav ms-auto">
                 <% if (usuarioLogeado && usuarioLogeado.rango==="administrador" ){ %>

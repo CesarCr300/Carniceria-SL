@@ -12,7 +12,6 @@ const ExpressError = require("./utils/expressError")
 const routerCliente = require("./routes/cliente.routes");
 const routerProductos = require("./routes/productos.routes");
 const routerUsuario = require("./routes/usuario.routes");
-const asyncError = require("./utils/asyncError");
 const { Usuario } = require("./data/modelos");
 
 app.set("port", process.env.PORT || 3000);

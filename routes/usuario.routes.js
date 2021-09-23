@@ -14,8 +14,8 @@ router.post("/registrar", asyncError(async(req, res, next) => {
     const { correo, username, password, rango } = req.body;
     const usuario = new Usuario({ correo, username, rango });
     const usuarioFinal = await Usuario.register(usuario, password)
-    req.flash("exito", `Bienvenido, ${username}`)
-    res.redirect("/clientes")
+    req.flash("exito", `${username} creado correctamente.`)
+    res.redirect("/")
 }))
 
 router.get("/login", (req, res) => {
@@ -23,7 +23,7 @@ router.get("/login", (req, res) => {
 })
 router.post("/login", passport.authenticate("local", { failureFlash: true, failureRedirect: "/clientes" }), asyncError(async(req, res, next) => {
     req.flash("exito", "Sesión Iniciada correctamente")
-    res.redirect("/clientes")
+    res.redirect("/")
 }))
 
 router.get("/logout", (req, res) => {

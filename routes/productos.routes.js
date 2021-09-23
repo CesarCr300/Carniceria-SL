@@ -1,10 +1,13 @@
 const { Router } = require("express");
 const router = new Router({ mergeParams: true });
 
+const { inicioSesion } = require("../utils/middlewares");
 const modelos = require("../data/modelos");
 const Cliente = modelos.Cliente;
 const Producto = modelos.Producto;
 let categorias = ["res", "cerdo", "pollo", "carnero", "pavo", "otros"];
+
+router.use(inicioSesion)
 
 router.get("/", async(req, res) => {
     const { id } = req.params;

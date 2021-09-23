@@ -5,7 +5,7 @@ const modelos = require("../data/modelos");
 const asyncError = require("../utils/asyncError");
 const ExpressError = require("../utils/expressError");
 const Cliente = modelos.Cliente;
-const { inicioSesion } = require("../utils/middlewares")
+const { inicioSesion, esModerador } = require("../utils/middlewares")
 
 const { esquemaCliente } = require("../esquemasJoi/validaciones")
 const validacionCliente = (req, res, next) => {
@@ -17,15 +17,17 @@ const validacionCliente = (req, res, next) => {
     next()
 }
 
-router.get("/", inicioSesion, asyncError(async(req, res, next) => {
+router.use(inicioSesion)
+
+router.get("/", asyncError(async(req, res, next) => {
     const clientes = await Cliente.find();
     res.render("clientes/index.ejs", { clientes });
 }));
 
-router.get("/nuevo", inicioSesion, (req, res) => {
+router.get("/nuevo", esModerador, (req, res) => {
     res.render("clientes/nuevo.ejs");
 });
-router.post("/", inicioSesion, validacionCliente, asyncError(async(req, res) => {
+router.post("/", esModerador, validacionCliente, asyncError(async(req, res) => {
     const { ruc, nombre, direccion, numero } = req.body;
     const cliente = await new Cliente({
         _id: ruc,
@@ -38,19 +40,19 @@ router.post("/", inicioSesion, validacionCliente, asyncError(async(req, res) => 
     res.redirect("/clientes");
 }));
 
-router.delete("/:id", inicioSesion, asyncError(async(req, res) => {
+router.delete("/:id", esModerador, asyncError(async(req, res) => {
     const { id } = req.params;
     const cliente = await Cliente.findOneAndDelete({ _id: id });
     req.flash("exito", `${cliente.nombre} fue borrado exitosamente`)
     res.redirect("/clientes");
 }));
 
-router.get("/:id/editar", inicioSesion, asyncError(async(req, res) => {
+router.get("/:id/editar", esModerador, asyncError(async(req, res) => {
     const { id } = req.params;
     const cliente = await Cliente.findById(id);
     res.render("clientes/editar.ejs", { cliente });
 }));
-router.put("/:id", inicioSesion, validacionCliente, asyncError(async(req, res) => {
+router.put("/:id", esModerador, validacionCliente, asyncError(async(req, res) => {
     const { id } = req.params;
     const { nombre, direccion, numero } = req.body;
     await Cliente.findByIdAndUpdate(id, {

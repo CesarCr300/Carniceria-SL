@@ -6,15 +6,16 @@ const { inicioSesion, esModerador } = require("../utils/middlewares");
 
 router.use(inicioSesion)
 
-router.get("/", productos.renderizarIndex);
+router.route("/")
+    .get(productos.renderizarIndex)
+    .post(esModerador, productos.nuevo);
 
 router.get("/nuevo", esModerador, productos.renderizarNuevo);
 
-router.post("/", esModerador, productos.nuevo);
+router.route("/:idProducto")
+    .put(esModerador, productos.editar)
+    .delete(esModerador, productos.borrar);
 
 router.get("/:idProducto/editar", esModerador, productos.renderizarEditar);
-router.put("/:idProducto", esModerador, productos.editar);
-
-router.delete("/:idProducto", esModerador, productos.borrar);
 
 module.exports = router;

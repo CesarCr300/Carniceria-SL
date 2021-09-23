@@ -25,4 +25,10 @@ router.post("/login", passport.authenticate("local", { failureFlash: true, failu
     req.flash("exito", "Sesión Iniciada correctamente")
     res.redirect("/clientes")
 }))
+
+router.get("/logout", (req, res) => {
+    req.logOut();
+    req.flash("exito", "Sesión cerrada correctamente");
+    res.redirect("/")
+})
 module.exports = router;

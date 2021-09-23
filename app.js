@@ -12,7 +12,8 @@ const ExpressError = require("./utils/expressError")
 const routerCliente = require("./routes/cliente.routes");
 const routerProductos = require("./routes/productos.routes");
 const routerUsuario = require("./routes/usuario.routes");
-const { Usuario } = require("./data/modelos");
+const { Usuario, Cliente } = require("./data/modelos");
+const asyncError = require("./utils/asyncError");
 
 app.set("port", process.env.PORT || 3000);
 app.set("view engine", "ejs");
@@ -51,9 +52,11 @@ app.use((req, res, next) => {
     next();
 })
 
-app.get("/", (req, res) => {
-    res.render("inicio.ejs")
-});
+app.get("/", async(req, res, next) => {
+    const cliente = await Cliente.findById("PUBLICO").populate("productos");
+    return res.render("inicio.ejs", { cliente })
+})
+
 app.use(routerUsuario);
 app.use("/clientes", routerCliente);
 app.use("/clientes/:id/productos", routerProductos);

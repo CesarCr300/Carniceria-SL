@@ -19,7 +19,7 @@ const validacionCliente = (req, res, next) => {
 
 router.use(inicioSesion)
 
-router.get("/", asyncError(async(req, res, next) => {
+router.get("", asyncError(async(req, res, next) => {
     const clientes = await Cliente.find();
     res.render("clientes/index.ejs", { clientes });
 }));

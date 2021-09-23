@@ -8,7 +8,7 @@ const { Usuario } = require("../data/modelos")
 const { inicioSesion, esModerador } = require("../utils/middlewares");
 
 
-router.get("/registrar", (req, res) => {
+router.get("/registrar", inicioSesion, (req, res) => {
     res.render("usuario/registrar.ejs");
 })
 router.post("/registrar", inicioSesion, esModerador, asyncError(async(req, res, next) => {

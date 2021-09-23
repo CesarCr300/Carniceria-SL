@@ -9,7 +9,7 @@ let categorias = ["res", "cerdo", "pollo", "carnero", "pavo", "otros"];
 
 router.use(inicioSesion)
 
-router.get("/", async(req, res) => {
+router.get("", async(req, res) => {
     const { id } = req.params;
     const cliente = await Cliente.findById(id).populate("productos");
     res.render("clientes/productos/mostrar", {

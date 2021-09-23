@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = new Router({ mergeParams: true });
 
-const { inicioSesion } = require("../utils/middlewares");
+const { inicioSesion, esModerador } = require("../utils/middlewares");
 const modelos = require("../data/modelos");
 const Cliente = modelos.Cliente;
 const Producto = modelos.Producto;
@@ -18,11 +18,11 @@ router.get("/", async(req, res) => {
     });
 });
 
-router.get("/nuevo", async(req, res) => {
+router.get("/nuevo", esModerador, async(req, res) => {
     const { id } = req.params;
     res.render("clientes/productos/nuevo", { id });
 });
-router.post("/", async(req, res) => {
+router.post("/", esModerador, async(req, res) => {
     const { id } = req.params;
     const { nombre, precio, categoria } = req.body;
     const cliente = await Cliente.findById(id);
@@ -38,12 +38,12 @@ router.post("/", async(req, res) => {
     res.redirect(`/clientes/${id}/productos`);
 });
 
-router.get("/:idProducto/editar", async(req, res) => {
+router.get("/:idProducto/editar", esModerador, async(req, res) => {
     const { id, idProducto } = req.params;
     const producto = await Producto.findById(idProducto);
     res.render("clientes/productos/editar", { id, producto, categorias });
 });
-router.put("/:idProducto", async(req, res) => {
+router.put("/:idProducto", esModerador, async(req, res) => {
     const { id, idProducto } = req.params;
     const { nombre, precio, categoria } = req.body;
     await Producto.findByIdAndUpdate(idProducto, {
@@ -55,7 +55,7 @@ router.put("/:idProducto", async(req, res) => {
     res.redirect(`/clientes/${id}/productos`);
 });
 
-router.delete("/:idProducto", async(req, res) => {
+router.delete("/:idProducto", esModerador, async(req, res) => {
     const { idProducto, id } = req.params;
     await Cliente.findByIdAndUpdate(id, { $pull: { productos: idProducto } });
     const producto = await Producto.findByIdAndDelete(idProducto, { new: true });

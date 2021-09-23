@@ -53,7 +53,7 @@ app.use((req, res, next) => {
 })
 
 app.get("/", (req, res) => {
-    res.redirect("/clientes");
+    res.render("inicio.ejs")
 });
 app.use(routerUsuario);
 app.use("/clientes", routerCliente);

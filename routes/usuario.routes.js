@@ -22,8 +22,7 @@ router.get("/login", (req, res) => {
     res.render("usuario/login.ejs")
 })
 router.post("/login", passport.authenticate("local", { failureFlash: true, failureRedirect: "/clientes" }), asyncError(async(req, res, next) => {
-    console.log("hi")
-    req.flash("exito", "Holaaaaaaa")
+    req.flash("exito", "Sesión Iniciada correctamente")
     res.redirect("/clientes")
 }))
 module.exports = router;

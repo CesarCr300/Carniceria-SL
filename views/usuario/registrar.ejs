@@ -1,0 +1,27 @@
+<% layout("./layouts/base.ejs") %>
+
+    <h1>Registrar</h1>
+    <form action="/registrar" method="POST" novalidate class="needs-validation">
+        <div class="mb-3">
+            <label for="correo" class="form-label">Correo: </label>
+            <input type="email1" name="correo" id="correo" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="username" class="form-label">Usuario </label>
+            <input type="text" name="username" id="username" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <input type="password" name="password" id="password" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="rango">Rango: </label>
+            <select name="rango" id="rango" class="form-select">
+                <option value="moderador">moderador</option>
+                <option value="visitante">visitante</option>
+            </select>
+        </div>
+        <button class="btn btn-success">Crear</button>
+        <a class="btn btn-secondary text-light" href="/clientes">Volver a clientes</a>
+    </form>
+    <script src="/public/validation.js"></script>

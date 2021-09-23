@@ -7,7 +7,18 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-link active" aria-current="page" href="/clientes">Clientes</a>
-                <a class="nav-link" href="/clientes/nuevo">Nuevo Cliente</a>
+                <a class="nav-link active" href="/clientes/nuevo">Nuevo Cliente</a>
+            </div>
+            <div class="navbar-nav ms-auto">
+                <% if (usuarioLogeado && usuarioLogeado.rango==="administrador" ){ %>
+                    <a class="nav-link active" href="/registrar">Registrar</a>
+                    <% } %>
+                        <% if (usuarioLogeado){%>
+                            <a class="nav-link active" href="/login">Cerrar sesión</a>
+                            <% } else {%>
+                                <a class="nav-link active" aria-current="page" href="/login">Iniciar sesión</a>
+                                <% } %>
+
             </div>
         </div>
     </div>

@@ -5,11 +5,15 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const session = require("express-session")
 const flash = require("connect-flash")
+const passport = require("passport");
+const passportLocal = require("passport-local");
 
 const ExpressError = require("./utils/expressError")
 const routerCliente = require("./routes/cliente.routes");
 const routerProductos = require("./routes/productos.routes");
+const routerUsuario = require("./routes/usuario.routes");
 const asyncError = require("./utils/asyncError");
+const { Usuario } = require("./data/modelos");
 
 app.set("port", process.env.PORT || 3000);
 app.set("view engine", "ejs");
@@ -31,9 +35,18 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 24 * 7,
     },
 }))
-
 app.use(flash());
+
+//configuraciones passport
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new passportLocal(Usuario.authenticate()));
+passport.serializeUser(Usuario.serializeUser());
+passport.deserializeUser(Usuario.deserializeUser());
+
 app.use((req, res, next) => {
+    res.locals.usuarioLogeado = req.user;
     res.locals.exito = req.flash('exito');
     res.locals.error = req.flash('error');
     next();
@@ -42,6 +55,7 @@ app.use((req, res, next) => {
 app.get("/", (req, res) => {
     res.redirect("/clientes");
 });
+app.use(routerUsuario);
 app.use("/clientes", routerCliente);
 app.use("/clientes/:id/productos", routerProductos);
 app.get("*", (req, res, next) => {

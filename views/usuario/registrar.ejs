@@ -17,6 +17,7 @@
             <label for="rango">Rango: </label>
             <select name="rango" id="rango" class="form-select">
                 <% if (usuarioLogeado.rango==="administrador" ){ %>
+                    <option value="administrador">administrador</option>
                     <option value="moderador">moderador</option>
                     <% } %>
                         <option value="visitante">visitante</option>

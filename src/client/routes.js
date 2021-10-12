@@ -4,7 +4,7 @@ const router = new Router();
 const asyncError = require("../utils/asyncError");
 const ExpressError = require("../utils/expressError");
 const { inicioSesion, esModerador } = require("../utils/middlewares");
-const clientes = require("./controladores");
+const controllers = require("./controllers");
 
 const { esquemaCliente } = require("../esquemasJoi/validaciones")
 const validacionCliente = (req, res, next) => {
@@ -19,15 +19,15 @@ const validacionCliente = (req, res, next) => {
 router.use(inicioSesion)
 
 router.route("/")
-    .get(asyncError(clientes.renrerizarIndex))
-    .post(esModerador, validacionCliente, asyncError(clientes.nuevo));
+    .get(asyncError(controllers.renrerizarIndex))
+    .post(esModerador, validacionCliente, asyncError(controllers.nuevo));
 
-router.get("/nuevo", esModerador, clientes.renderizarNuevo);
+router.get("/nuevo", esModerador, controllers.renderizarNuevo);
 
 router.route("/:id")
-    .delete(esModerador, asyncError(clientes.borrar))
-    .put(esModerador, validacionCliente, asyncError(clientes.editar));
+    .delete(esModerador, asyncError(controllers.borrar))
+    .put(esModerador, validacionCliente, asyncError(controllers.editar));
 
-router.get("/:id/editar", esModerador, asyncError(clientes.renderizarEditar));
+router.get("/:id/editar", esModerador, asyncError(controllers.renderizarEditar));
 
 module.exports = router;

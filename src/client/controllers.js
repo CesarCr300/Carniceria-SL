@@ -1,4 +1,4 @@
-const Cliente = require("./modelo");
+const Cliente = require("./model");
 
 module.exports.renrerizarIndex = async(req, res, next) => {
     const clientes = await Cliente.find();

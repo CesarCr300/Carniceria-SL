@@ -1,10 +1,10 @@
-const { Cliente } = require("../cliente")
-const { Producto } = require("./modelo")
+const client = require("../client")
+const model = require("./modelo")
 let categorias = ["res", "cerdo", "pollo", "carnero", "pavo", "otros"];
 
 module.exports.renderizarIndex = async(req, res) => {
     const { id } = req.params;
-    const cliente = await Cliente.findById(id).populate("productos");
+    const cliente = await client.model.findById(id).populate("productos");
     res.render("clientes/productos/mostrar", {
         cliente,
         productos: cliente.productos,
@@ -19,8 +19,8 @@ module.exports.renderizarNuevo = async(req, res) => {
 module.exports.nuevo = async(req, res) => {
     const { id } = req.params;
     const { nombre, precio, categoria } = req.body;
-    const cliente = await Cliente.findById(id);
-    const producto = await Producto.create({
+    const cliente = await client.model.findById(id);
+    const producto = await model.create({
         nombre,
         precio,
         categoria,
@@ -34,14 +34,14 @@ module.exports.nuevo = async(req, res) => {
 
 module.exports.renderizarEditar = async(req, res) => {
     const { id, idProducto } = req.params;
-    const producto = await Producto.findById(idProducto);
+    const producto = await model.findById(idProducto);
     res.render("clientes/productos/editar", { id, producto, categorias });
 };
 
 module.exports.editar = async(req, res) => {
     const { id, idProducto } = req.params;
     const { nombre, precio, categoria } = req.body;
-    await Producto.findByIdAndUpdate(idProducto, {
+    await model.findByIdAndUpdate(idProducto, {
         nombre,
         precio,
         categoria,
@@ -52,8 +52,8 @@ module.exports.editar = async(req, res) => {
 
 module.exports.borrar = async(req, res) => {
     const { idProducto, id } = req.params;
-    await Cliente.findByIdAndUpdate(id, { $pull: { productos: idProducto } });
-    const producto = await Producto.findByIdAndDelete(idProducto, { new: true });
+    await client.model.findByIdAndUpdate(id, { $pull: { productos: idProducto } });
+    const producto = await model.findByIdAndDelete(idProducto, { new: true });
     req.flash("exito", `${producto.nombre} fue eliminado correctamente`)
     res.redirect(`/clientes/${id}/productos`);
 }

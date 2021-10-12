@@ -1,5 +1,5 @@
 const { Cliente } = require("../cliente")
-const { Producto } = require("../productos")
+const { Producto } = require("./modelo")
 let categorias = ["res", "cerdo", "pollo", "carnero", "pavo", "otros"];
 
 module.exports.renderizarIndex = async(req, res) => {

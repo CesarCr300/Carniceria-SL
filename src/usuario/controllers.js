@@ -1,4 +1,4 @@
-const { Usuario } = require("../usuario");
+const model = require("./model");
 
 module.exports.renderizarRegistrar = (req, res) => {
     res.render("usuario/registrar.ejs");
@@ -6,8 +6,8 @@ module.exports.renderizarRegistrar = (req, res) => {
 
 module.exports.registrar = async(req, res, next) => {
     const { correo, username, password, rango } = req.body;
-    const usuario = new Usuario({ correo, username, rango });
-    const usuarioFinal = await Usuario.register(usuario, password)
+    const usuario = new model({ correo, username, rango });
+    const usuarioFinal = await model.register(usuario, password)
     req.flash("exito", `${username} creado correctamente.`)
     res.redirect("/")
 }

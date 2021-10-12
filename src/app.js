@@ -9,10 +9,10 @@ const passport = require("passport");
 const passportLocal = require("passport-local");
 
 const ExpressError = require("./utils/expressError")
-const routerProductos = require("./routes/productos.routes");
-const routerUsuario = require("./routes/usuario.routes");
-const { Usuario } = require("./usuario");
+    // const routerUsuario = require("./routes/usuario.routes");
+const User = require("./usuario");
 const { Cliente, ClientRoutes } = require("./cliente")
+const products = require("./productos")
 app.set("port", process.env.PORT || 3000);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -38,9 +38,9 @@ app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new passportLocal(Usuario.authenticate()));
-passport.serializeUser(Usuario.serializeUser());
-passport.deserializeUser(Usuario.deserializeUser());
+passport.use(new passportLocal(User.model.authenticate()));
+passport.serializeUser(User.model.serializeUser());
+passport.deserializeUser(User.model.deserializeUser());
 
 app.use((req, res, next) => {
     res.locals.usuarioLogeado = req.user;
@@ -55,9 +55,9 @@ app.get("/", async(req, res, next) => {
     return res.render("inicio.ejs", { cliente })
 })
 
-app.use(routerUsuario);
+app.use(User.routes);
 app.use("/clientes", ClientRoutes);
-app.use("/clientes/:id/productos", routerProductos);
+app.use("/clientes/:id/productos", products.routes);
 app.get("*", (req, res, next) => {
     throw new ExpressError("Page dont found", 404)
 })

@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = new Router({ mergeParams: true });
 
-const productos = require("../controladores/productos");
+const productos = require("./controllers");
 const { inicioSesion, esModerador } = require("../utils/middlewares");
 
 router.use(inicioSesion)

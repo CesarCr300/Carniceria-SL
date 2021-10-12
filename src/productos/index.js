@@ -1,3 +1,3 @@
 const Producto = require("./modelo")
-
-module.exports = { Producto }
+const routes = require("./routes")
+module.exports = { Producto, routes }

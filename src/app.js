@@ -12,9 +12,8 @@ const ExpressError = require("./utils/expressError")
 const routerCliente = require("./routes/cliente.routes");
 const routerProductos = require("./routes/productos.routes");
 const routerUsuario = require("./routes/usuario.routes");
-const { Usuario, Cliente } = require("./data/modelos");
-const asyncError = require("./utils/asyncError");
-
+const { Usuario } = require("./data/modelos");
+const { Cliente } = require("./cliente")
 app.set("port", process.env.PORT || 3000);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -24,7 +23,6 @@ app.use("/public", express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(methodOverride("_method"));
-
 app.use(session({
     secret: process.env.SECRET_SESSION,
     resave: false,
@@ -52,6 +50,7 @@ app.use((req, res, next) => {
     next();
 })
 
+
 app.get("/", async(req, res, next) => {
     const cliente = await Cliente.findById("PUBLICO").populate("productos");
     return res.render("inicio.ejs", { cliente })
@@ -70,6 +69,4 @@ app.use((err, req, res, next) => {
     res.redirect("/clientes")
 })
 
-app.listen(app.get("port"), () => {
-    console.log("Listen");
-});
+module.exports = app

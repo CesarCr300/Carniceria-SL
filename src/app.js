@@ -9,11 +9,10 @@ const passport = require("passport");
 const passportLocal = require("passport-local");
 
 const ExpressError = require("./utils/expressError")
-const routerCliente = require("./routes/cliente.routes");
 const routerProductos = require("./routes/productos.routes");
 const routerUsuario = require("./routes/usuario.routes");
 const { Usuario } = require("./usuario");
-const { Cliente } = require("./cliente")
+const { Cliente, ClientRoutes } = require("./cliente")
 app.set("port", process.env.PORT || 3000);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -57,7 +56,7 @@ app.get("/", async(req, res, next) => {
 })
 
 app.use(routerUsuario);
-app.use("/clientes", routerCliente);
+app.use("/clientes", ClientRoutes);
 app.use("/clientes/:id/productos", routerProductos);
 app.get("*", (req, res, next) => {
     throw new ExpressError("Page dont found", 404)

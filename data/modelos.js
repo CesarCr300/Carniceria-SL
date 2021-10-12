@@ -24,7 +24,7 @@ const clienteEsquema = new mongoose.Schema({
 });
 clienteEsquema.post("findOneAndDelete", async(farm) => {
     if (farm.productos.length > 0) {
-        let res = await Producto.deleteMany({ _id: { $in: farm.productos } });
+        await Producto.deleteMany({ _id: { $in: farm.productos } });
     }
 });
 const Cliente = mongoose.model("Cliente", clienteEsquema);

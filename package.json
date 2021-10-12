@@ -4,13 +4,14 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "node app.js",
+        "start": "node start app.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@pm2/pm2-version-check": "^1.0.4",
         "ansi-regex": "^6.0.1",
         "connect-flash": "^0.1.1",
         "dotenv": "^10.0.0",
@@ -25,6 +26,7 @@
         "passport": "^0.4.1",
         "passport-local": "^1.0.0",
         "passport-local-mongoose": "^6.1.0",
-        "path": "^0.12.7"
+        "path": "^0.12.7",
+        "pm2": "^5.1.2"
     }
 }

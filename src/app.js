@@ -12,7 +12,7 @@ const ExpressError = require("./utils/expressError")
 const routerCliente = require("./routes/cliente.routes");
 const routerProductos = require("./routes/productos.routes");
 const routerUsuario = require("./routes/usuario.routes");
-const { Usuario } = require("./data/modelos");
+const { Usuario } = require("./usuario");
 const { Cliente } = require("./cliente")
 app.set("port", process.env.PORT || 3000);
 app.set("view engine", "ejs");

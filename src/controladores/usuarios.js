@@ -1,4 +1,4 @@
-const { Usuario } = require("../data/modelos");
+const { Usuario } = require("../usuario");
 
 module.exports.renderizarRegistrar = (req, res) => {
     res.render("usuario/registrar.ejs");

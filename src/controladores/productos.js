@@ -1,4 +1,3 @@
-// const { Cliente, Producto } = require("../data/modelos");
 const { Cliente } = require("../cliente")
 const { Producto } = require("../productos")
 let categorias = ["res", "cerdo", "pollo", "carnero", "pavo", "otros"];

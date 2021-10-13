@@ -1,3 +1,4 @@
 const model = require("./model")
 const routes = require("./routes")
-module.exports = { model, routes }
+const controllers = require("./controllers")
+module.exports = { model, routes, controllers }

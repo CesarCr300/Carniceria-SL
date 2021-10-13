@@ -16,6 +16,7 @@ module.exports.renderizarLogin = (req, res) => {
     res.render("usuario/login.ejs")
 }
 module.exports.login = async(req, res, next) => {
+    console.log("se realizo")
     req.flash("exito", "Sesión Iniciada correctamente")
     res.redirect("/")
 }

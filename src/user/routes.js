@@ -13,7 +13,10 @@ router.route("/registrar")
 
 router.route("/login")
     .get(controllers.renderizarLogin)
-    .post(passport.authenticate("local", { failureFlash: true, failureRedirect: "/" }), asyncError(controllers.login))
+    .post((req, res, next) => {
+        console.log("se realizo")
+        next()
+    }, passport.authenticate("local", { failureFlash: true, failureRedirect: "/" }), asyncError(controllers.login))
 
 router.get("/logout", inicioSesion, controllers.logout);
 

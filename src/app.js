@@ -9,9 +9,9 @@ const passport = require("passport");
 const passportLocal = require("passport-local");
 
 const ExpressError = require("./utils/expressError")
-const user = require("./usuario");
+const user = require("./user");
 const client = require("./client")
-const products = require("./productos")
+const products = require("./products")
 app.set("port", process.env.PORT || 3000);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));

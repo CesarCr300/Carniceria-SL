@@ -23,7 +23,7 @@ app.use(express.json());
 app.use(methodOverride("_method"));
 app.use(session({
     secret: process.env.SECRET_SESSION,
-    resave: false,
+    resave: true,
     saveUninitialized: true,
     cookie: {
         httpOnly: true,
